@@ -70,19 +70,20 @@ A complete version of the SQL query is available in:
 
 ---
 
-## 📊 Tableau Dashboards
-Screenshots are available in the `/screenshots/` folder.
+## 📊 Tableau Dashboards (Screenshots)
 
-Dashboards include:
-- **Cluster Overview**  
-  - monthly volumes for New, Recurring, Reactivated, Churned  
-  - net growth indicator  
-  - churn/recurring ratios  
+### Global Overview
+Seller lifecycle, monthly clustering, segment distribution, and high-level KPIs.
 
-- **Cluster Drilldown**  
-  - individual cluster focus  
-  - time-series trends  
-  - segmentation filter (T/A/B/C)
+![Dashboard Overview](screenshots/dashboard_overview.png)
+
+---
+
+### Retention Metrics & Churn Dynamics
+Net growth, churn trends, and segment-level churn behavior.
+
+![Dashboard Retention](screenshots/dashboard_retention.png)
+
 
 ---
 
