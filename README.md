@@ -150,6 +150,38 @@ These are cyclical, not structural.
 
 ---
 
+## 🔭 Potential Next Steps
+
+Beyond the current analysis, several extensions could deepen retention understanding and strengthen decision-making:
+
+1. **Behavior Depth**
+      
+      Go beyond simple “active/inactive” by analyzing sales volume and engagement intensity within each active month.
+
+3. **Average Time to Churn**
+
+      Measure the average lifetime from first activity to churn to identify segments with shorter or longer retention cycles.
+
+3. **Seasonality Drivers**
+      
+      Distinguish whether December or summer slowdowns come from seller inventory cycles or from buyer demand — each implies different actions.
+
+4. **Auction Outcome Analysis**
+
+      Investigate unsuccessful auctions (pricing, timing, buyer activity) to identify friction points impacting seller retention.
+
+5. **Qualitative Feedback**
+
+      Combine quantitative trends with seller surveys or interviews to understand the underlying “why” behind churn or inactivity.
+
+6. **Recurring Duration**
+
+      Track how long sellers remain in the “recurring” state (consecutive active months) to detect loyalty patterns and potential early warning signals.
+
+These steps would help transform the retention model into a more predictive and operational tool, supporting long-term growth and proactive seller engagement.
+
+---
+
 ## 📄 Full Case Study (Extended PDF)
 For the complete analysis with detailed insights, segment deep-dives, and structured recommendations, the full case study is available here:
 
