@@ -156,27 +156,27 @@ Beyond the current analysis, several extensions could deepen retention understan
 
 1. **Behavior Depth**
       
-      Go beyond simple “active/inactive” by analyzing sales volume and engagement intensity within each active month.
+   - Go beyond simple “active/inactive” by analyzing sales volume and engagement intensity within each active month.
 
 3. **Average Time to Churn**
 
-      Measure the average lifetime from first activity to churn to identify segments with shorter or longer retention cycles.
+   - Measure the average lifetime from first activity to churn to identify segments with shorter or longer retention cycles.
 
 3. **Seasonality Drivers**
       
-      Distinguish whether December or summer slowdowns come from seller inventory cycles or from buyer demand — each implies different actions.
+   - Distinguish whether December or summer slowdowns come from seller inventory cycles or from buyer demand — each implies different actions.
 
 4. **Auction Outcome Analysis**
 
-      Investigate unsuccessful auctions (pricing, timing, buyer activity) to identify friction points impacting seller retention.
+   - Investigate unsuccessful auctions (pricing, timing, buyer activity) to identify friction points impacting seller retention.
 
 5. **Qualitative Feedback**
 
-      Combine quantitative trends with seller surveys or interviews to understand the underlying “why” behind churn or inactivity.
+   - Combine quantitative trends with seller surveys or interviews to understand the underlying “why” behind churn or inactivity.
 
 6. **Recurring Duration**
 
-      Track how long sellers remain in the “recurring” state (consecutive active months) to detect loyalty patterns and potential early warning signals.
+   - Track how long sellers remain in the “recurring” state (consecutive active months) to detect loyalty patterns and potential early warning signals.
 
 These steps would help transform the retention model into a more predictive and operational tool, supporting long-term growth and proactive seller engagement.
 
