@@ -41,6 +41,19 @@ This structure was sufficient to reconstruct monthly activity profiles and class
 
 ---
 
+## 🔍 Lifecycle Clustering
+
+Sellers are assigned to a lifecycle cluster each month based on their activity history:
+
+- **New** → first active month  
+- **Recurring** → consecutive active months  
+- **Reactivated** → returns after ≥1 inactive month  
+- **Churned** → ≥3 inactive months after previous activity  
+
+This monthly lifecycle model creates a consistent framework for retention analysis, churn measurement, and long-term trend exploration.
+
+---
+
 ## 🧠 SQL Logic & Methodology
 
 The retention model is fully implemented in SQL.  
