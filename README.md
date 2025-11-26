@@ -150,6 +150,15 @@ These are cyclical, not structural.
 
 ---
 
+## 📄 Full Case Study (Extended PDF)
+For the complete analysis with detailed insights, segment deep-dives, and structured recommendations, the full case study is available here:
+
+👉 **[Retention Case Study – Full PDF](docs/retention_case_study_pro.pdf)**
+
+This document provides the complete written interpretation of the dashboards, long-term patterns, seasonal behavior, and strategic recommendations.
+
+---
+
 ## 📚 What I Learned
 - Designing temporal logic for lifecycle modelling  
 - Building SQL-based clustering from raw activity data  
