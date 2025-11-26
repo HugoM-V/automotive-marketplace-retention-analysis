@@ -17,155 +17,157 @@ It does **not** reflect real company performance.
    - Reactivated Sellers  
    - Churned Sellers  
 
-2. **Produce a monthly overview** of the number of sellers in each cluster using SQL.
+2. **Generate a monthly overview** of the number of sellers in each lifecycle cluster.
 
-3. **Build interactive Tableau dashboards**:
-   - cluster-level view + individual cluster filter  
+3. **Build Tableau dashboards**:
+   - cluster-level view with filters  
    - segmentation filter (T, A, B, C)  
-   - time-series analysis  
+   - time-series retention and churn analysis  
 
-4. **Interpret long-term trends** in retention, churn, and reactivation.
+4. **Interpret long-term retention, churn, and reactivation trends.**
 
-5. **Recommend actions** to improve seller retention and operational monitoring.
+5. **Develop recommendations** to strengthen seller engagement and monitor retention proactively.
 
 ---
 
 ## 🛠️ Data & Tools
 - **SQL (Snowflake-style syntax)**
-- **Tableau** – dashboards created based on the aggregated monthly results
-- The project is based on a **sample dataset provided for a technical assessment**.  
-  It included:
-  - seller account information (unique IDs, segment categories)
-  - auction-level activity (dates and success outcomes)
-  This structure was sufficient to build monthly activity profiles and classify sellers into retention clusters.
+- **Tableau** – dashboards built from the aggregated monthly dataset
+- The project is based on a **sample dataset** including:
+  - seller account metadata (unique IDs, segment categories)
+  - auction-level activity (dates and successful outcomes)
+  
+This structure was sufficient to reconstruct monthly activity profiles and classify sellers into lifecycle clusters.
 
 ---
 
-## 🏗️ SQL Approach
+## 🧠 SQL Logic & Methodology
 
-### 1. Monthly aggregation
-The SQL logic:
-- groups all auctions by `seller_account_uuid` and month (using `auction_reference_date`)
-- keeps only successful auctions (`is_successful = TRUE`)
-- computes seller activity per month
+The retention model is fully implemented in SQL.  
+The script rebuilds month-by-month activity for every seller, detects lifecycle transitions using window functions, and classifies each seller accordingly.
 
-### 2. Classification rules (clusters)
-Based on consecutive activity patterns:
+### 🔧 Key steps of the pipeline
 
-| Cluster | Definition |
-|--------|------------|
-| **New Seller** | First-time seller in that month |
-| **Recurring Seller** | Successful auctions in ≥2 consecutive months |
-| **Reactivated Seller** | Returns after ≥1 inactive month (but has sold before) |
-| **Churned Seller** | No sales for ≥3 months after previously selling |
+1. **Monthly normalization**  
+   Successful auctions are grouped by seller and month using `DATE_TRUNC`.
 
-### 3. SQL structure
-- CTE-driven pipeline  
-- window functions to inspect previous activity  
-- date truncation for clean monthly grouping  
-- join with segmentation table (T/A/B/C) for dashboard filtering  
+2. **Dynamic month calendar**  
+   A continuous timeline is generated (`GENERATOR`) to ensure that months with no activity are still captured.
 
-A complete version of the SQL query is available in:  
-`/sql/seller_clustering.sql`
+3. **Seller × month activity grid**  
+   Every seller is mapped to every month between their first and last activity to detect gaps.
+
+4. **Feature engineering for lifecycle transitions**  
+   - Previous-month activity (`LAG`)  
+   - Cumulative active months  
+   - Months since last activity (`DATEDIFF`)  
+   - Last active month tracking  
+
+5. **Lifecycle classification rules**
+   - **New:** first-ever active month  
+   - **Recurring:** consecutive active months  
+   - **Reactivated:** returns after ≥1 inactive month  
+   - **Churned:** 3 full months of inactivity  
+
+6. **Final monthly aggregation**  
+   Sellers are aggregated by month × lifecycle cluster × segment (T/A/B/C) for dashboarding.
+
+💡 *The complete SQL script is available here:*  
+[`sql/seller_clustering.sql`](sql/seller_clustering.sql)
+
+> ⚙️ The clustering logic combines window functions, a dynamic date calendar, and inactivity-gap calculations to detect lifecycle transitions with high temporal accuracy.
 
 ---
 
 ## 📊 Tableau Dashboards (Screenshots)
 
 ### Global Overview
-Seller lifecycle, monthly clustering, segment distribution, and high-level KPIs.
+Seller lifecycle distribution, monthly activity trends, segment mix, and top-level KPIs.
 
 ![Dashboard Overview](screenshots/dashboard_overview.png)
 
 ---
 
 ### Retention Metrics & Churn Dynamics
-Net growth, churn trends, and segment-level churn behavior.
+Net growth, churn stability, reactivation vs acquisition patterns, and segment-level behavior.
 
 ![Dashboard Retention](screenshots/dashboard_retention.png)
-
 
 ---
 
 ## 🔍 Key Insights (Summary)
 
-### 1. Strong recurring base
-Recurring sellers form the **largest and most stable cluster**, growing significantly over the last 24 months.
+### 1. A strong and expanding recurring base
+Recurring sellers form the **largest and most stable cluster**, growing substantially over the last 24 months.
 
 ### 2. Reactivation > Acquisition
 Reactivated sellers (~104/month) consistently outpace new sellers (~34/month), reflecting:
 - a mature marketplace  
-- inventory-driven activity cycles  
-- healthy seller loyalty  
+- inventory-driven cycles  
+- strong platform loyalty  
 
 ### 3. Positive net growth
-Net growth remains **positive every month**, averaging +80 sellers/month.
+Net growth has been **positive every month**, averaging +80 sellers/month.
 
 ### 4. Controlled churn
-Churn stabilizes between **10–18%**, down from the more volatile early years.
+Churn remains between **10–18%**, significantly lower and more stable than in earlier years.
 
-### 5. Clear seasonality
-Churn spikes consistently in:
+### 5. Seasonal patterns
+Churn spikes consistently occur in:
 - **December (Q4 slowdown)**  
-- **Summer (July–August)**  
+- **July–August (summer dip)**  
 
-These represent market cycles, not structural problems.
+These are cyclical, not structural.
 
 ### 6. Segment dynamics
-- Segment **T** dominates volumes with moderate churn.  
-- Segment **C** improved dramatically: churn reduced from ~40% to ~20–25%.  
-- Segment **A** shows the lowest churn but a smaller share.
+- **Segment T**: largest, stable, moderate churn  
+- **Segment C**: major recovery from ~40% to ~20–25% churn  
+- **Segment A**: lowest churn but smaller volume  
 
 ---
 
 ## 💡 Recommendations (Summary)
 
 ### 1. Optimize reactivation cycles
-- Track short-cycle (1–2 months) vs long-cycle reactivations  
-- Monitor the size and health of the reactivation pool  
-- Tailor engagement based on reactivation behavior
+- Separate short-cycle (1–2 months) and long-cycle reactivations  
+- Track the reactivation pool health  
+- Adapt engagement based on reactivation patterns  
 
 ### 2. Manage seasonal churn proactively
-- Pre-season communication campaigns  
-- Mid-season outreach to inactive sellers  
-- Q1 reactivation push to accelerate return
+- Pre-season messaging  
+- Mid-season outreach  
+- Q1 win-back initiatives  
 
 ### 3. Monitor new seller acquisition closely
-- Rolling averages + thresholds to detect early declines  
-- Root-cause analysis if acquisition drops  
-- Combine with segmentation impact → targeted interventions
+- Use rolling averages and alert thresholds  
+- Investigate declines early  
+- Link acquisition to segment-level patterns  
 
 ### 4. Strengthen retention governance
 - Build a dedicated retention dashboard  
-- Set alert thresholds  
-- Link signals to predefined actions (AM outreach, automated flows)  
-
----
-
-## 📁 Repository Structure
-/sql
-seller_clustering.sql
-/screenshots
-dashboard_overview.png
-dashboard_clusters.png
-/docs
-case_study.pdf (optional cleaned portfolio version)
-README.md
+- Set alert rules  
+- Tie signals to operational actions (AM outreach, automated flows)  
 
 ---
 
 ## 📚 What I Learned
-- Designing temporal logic for retention/churn modelling  
-- Building cluster definitions from raw activity data  
+- Designing temporal logic for lifecycle modelling  
+- Building SQL-based clustering from raw activity data  
 - Analyzing multi-year trends and seasonality  
-- Creating actionable dashboards in Tableau  
-- Writing business-oriented insights & recommendations  
-- Presenting analytical work in a clear storytelling format  
+- Creating clear, actionable dashboards in Tableau  
+- Producing business-oriented insights and recommendations  
+- Structuring analytical work with clean data storytelling  
 
 ---
 
 ## 📄 Attachments
-- Technical Test Description (PDF)  
-- Insights Report (PDF)  
-- Recommendations Report (PDF)
+- 📘 **Full Case Study PDF:**  
+  [`docs/retention_case_study_pro.pdf`](docs/retention_case_study_pro.pdf)
+
+- 🧠 **SQL Script:**  
+  [`sql/seller_clustering.sql`](sql/seller_clustering.sql)
+
+- 🖼 **Tableau Screenshots:**  
+  [`screenshots/dashboard_overview.png`](screenshots/dashboard_overview.png)  
+  [`screenshots/dashboard_retention.png`](screenshots/dashboard_retention.png)
 
